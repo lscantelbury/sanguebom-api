@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id_pk           Int      @id @default(autoincrement())
+  user_name            String
+  user_email           String   @unique
+  user_password        String
+  user_rua             String
+  user_cep             Int
+  user_cidade          String
+  user_num_predial     Int
+  user_unidade_federal String
+  user_tipo_sanguineo  String
+  user_profile_pic     String
+  user_nascimento      DateTime
+  user_points          Int
+  user_bairro          String
+
+  comments Comment[]
+  certifications Certification[]
+  like Like?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Hospital {
+  hosp_id_pk           Int    @id @default(autoincrement())
+  hosp_name            String
+  hosp_username        String @unique
+  hosp_password        String
+  hosp_rua             String
+  hosp_cep             Int
+  hosp_cidade          String
+  hosp_num_predial     Int
+  hosp_unidade_federal String
+  hosp_pic             String
+}
+
+model Certification {
+  cert_id_pk          Int      @id @default(autoincrement())
+  cert_date           DateTime
+  hosp_id_fk Int
+  cert_tipo_sanguineo String
+
+  user User @relation(fields: [user_id_fk], references: [user_id_pk])
+  user_id_fk Int
+
+}
+
+model Comment {
+  com_id_pk    Int    @id @default(autoincrement())
+  comment_text String
+  user User  @relation(fields: [user_id_fk], references: [user_id_pk])
+  user_id_fk Int
+}
+
+model Post {
+  post_id_pk           Int    @id @default(autoincrement())
+  post_text            String
+  post_type            Int
+  post_points_to_share Int
+  post_owner_id        Int
+}
+
+model Like {
+  like_id_pk Int @id @default(autoincrement())
+  user User @relation(fields: [user_id_fk], references: [user_id_pk])
+  user_id_fk Int @unique
+}
