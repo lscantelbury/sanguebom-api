@@ -31,6 +31,8 @@ model User {
   like Like?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("users")
 }
 
 model Hospital {
@@ -44,24 +46,34 @@ model Hospital {
   hosp_num_predial     Int
   hosp_unidade_federal String
   hosp_pic             String
+  certification        Certification[]
+
+  @@map("hospitals")
 }
 
 model Certification {
   cert_id_pk          Int      @id @default(autoincrement())
   cert_date           DateTime
-  hosp_id_fk Int
+  hosp_id_fk          Int
   cert_tipo_sanguineo String
+  user_id_fk          Int
+  
 
-  user User @relation(fields: [user_id_fk], references: [user_id_pk])
-  user_id_fk Int
+  user                User @relation(fields: [user_id_fk], references: [user_id_pk])
+  hospital            Hospital @relation(fields: [hosp_id_fk], references: [hosp_id_pk])
 
+  @@map("certifications")
 }
 
 model Comment {
   com_id_pk    Int    @id @default(autoincrement())
   comment_text String
-  user User  @relation(fields: [user_id_fk], references: [user_id_pk])
   user_id_fk Int
+  post_id_fk Int
+  post Post @relation(fields: [post_id_fk], references: [post_id_pk])
+  user User  @relation(fields: [user_id_fk], references: [user_id_pk])
+
+  @@map("comments")
 }
 
 model Post {
@@ -70,10 +82,18 @@ model Post {
   post_type            Int
   post_points_to_share Int
   post_owner_id        Int
+  comments Comment[]
+  like Like[]
+  @@map("posts")
 }
 
 model Like {
   like_id_pk Int @id @default(autoincrement())
-  user User @relation(fields: [user_id_fk], references: [user_id_pk])
+  post_id_fk Int
   user_id_fk Int @unique
+
+  user User @relation(fields: [user_id_fk], references: [user_id_pk])
+  post Post @relation(fields: [post_id_fk], references: [post_id_pk])
+
+  @@map("likes")
 }
