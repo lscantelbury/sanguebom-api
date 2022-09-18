@@ -48,8 +48,8 @@ export class UserController {
         },
       });
       return response.status(201).json(user);
-    } catch (error) {
-      return response.status(500).json({ error: error });
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
     }
   }
   async show(request: Request, response: Response) {
@@ -64,7 +64,7 @@ export class UserController {
         return response.status(200).json(user);
       }
     } catch (error: any) {
-      return response.status(500).json({ error: error });
+      return response.status(500).json({ error: error.message });
     }
   }
   async login(request: Request, response: Response) {
@@ -86,8 +86,8 @@ export class UserController {
           return response.status(401).json({ error: "Usa+{{{}]rio ou Senha incorreta" });
         }
       }
-    } catch (error) {
-      return response.status(500).json({ error: error });
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
     }
   }
   async update(request: Request, response: Response) {
@@ -95,7 +95,6 @@ export class UserController {
     const {
       user_name,
       user_email,
-      user_password,
       user_rua,
       user_bairro,
       user_cep,
@@ -116,7 +115,6 @@ export class UserController {
         data: {
           user_name,
           user_email,
-          user_password,
           user_rua,
           user_bairro,
           user_cep,
@@ -130,27 +128,42 @@ export class UserController {
         },
       });
       return response.status(200).json(updatedUser);
-    } catch (error) {
-      return response.status(500).json({ error: error });
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
+    }
+  }
+  async resetPassword(request: Request, response: Response) {
+    const { user_id_pk } = request.params;
+    const { user_password } = request.body;
+    try {
+      const updatedUser = await prismaClient.user.update({
+        where: {
+          user_id_pk: Number(user_id_pk),
+        },
+        data: {
+          user_password,
+        },
+      });
+      return response.status(200).json(updatedUser);
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
+    }
+  }
+  async addPoints(request: Request, response: Response) {
+    const { user_id_pk } = request.params;
+    const { user_points } = request.body;
+    try {
+      const updatedPoints = await prismaClient.user.update({
+        where: {
+          user_id_pk: Number(user_id_pk),
+        },
+        data: {
+          user_points: user_points,
+        },
+      });
+      return response.status(200).json(updatedPoints);
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
     }
   }
 }
-
-
-// create a user in json format
-
-// {
-//   "user_name": "John Doe",
-//   "user_email": "
-//   "user_password": "123456",
-//   "user_rua": "Rua 1",
-//   "user_bairro": "Bairro 1",
-//   "user_cep": "12345678",
-//   "user_cidade": "Cidade 1",
-//   "user_num_predial": "123",
-//   "user_unidade_federal": "UF 1",
-//   "user_tipo_sanguineo": "A+",
-//   "user_profile_pic": "https://www.google.com",
-//   "user_nascimento": "997-07-16T19:20:30.451Z",
-//   "user_points": 0
-// }
