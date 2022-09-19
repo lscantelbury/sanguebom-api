@@ -26,12 +26,25 @@ export class CommentController {
       return response.status(500).json({ error: error.message });
     }
   }
+  async show(request: Request, response: Response) {
+    const { com_id_pk } = request.body;
+    try {
+      const comment = await prismaClient.comment.findUnique({
+        where: {
+          com_id_pk: Number(com_id_pk),
+        },
+      });
+      return response.status(200).json(comment);
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
+    }
+  }
   async commentByPost(request: Request, response: Response) {
     const { post_id_fk } = request.params;
     try {
       const comments = await prismaClient.comment.findMany({
         where: {
-          post_id_fk: Number(post_id_fk),
+          post_id_fk: Number(post_id_fk), 
         },
       });
       return response.status(200).json(comments);

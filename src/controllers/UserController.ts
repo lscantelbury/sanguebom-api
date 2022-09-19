@@ -104,7 +104,6 @@ export class UserController {
       user_tipo_sanguineo,
       user_profile_pic,
       user_nascimento,
-      user_points,
     } = request.body;
 
     try {
@@ -124,7 +123,6 @@ export class UserController {
           user_tipo_sanguineo,
           user_profile_pic,
           user_nascimento,
-          user_points,
         },
       });
       return response.status(200).json(updatedUser);

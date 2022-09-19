@@ -27,6 +27,20 @@ export class PostController {
       return response.status(500).json({ error: error.message });
     }
   }
+  async show(request: Request, response: Response) {
+    const { post_id_pk } = request.body;
+
+    try {
+      const post = await prismaClient.post.findUnique({
+        where: {
+          post_id_pk: Number(post_id_pk),
+        },
+      });
+      return response.status(200).json(post);
+    } catch (error: any) {
+      return response.status(500).json({ error: error.message });
+    }
+  }
   async postsByHospital(request: Request, response: Response) {
     const { hosp_id_pk } = request.params;
 
