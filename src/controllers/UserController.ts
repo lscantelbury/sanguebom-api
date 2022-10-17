@@ -82,7 +82,7 @@ export class UserController {
         if (isPasswordCorrect) {
           return response.status(200).json(user);
         } else {
-          return response.status(401).json({ error: "Usa+{{{}]rio ou Senha incorreta" });
+          return response.status(401).json({ error: "Usuário ou senha incorretos" });
         }
       }
     } catch (error: any) {
