@@ -40,10 +40,11 @@ model Hospital {
   hosp_name            String
   hosp_username        String @unique
   hosp_password        String
-  hosp_rua             String
   hosp_cep             Int
-  hosp_cidade          String
+  hosp_rua             String
   hosp_num_predial     Int
+  hosp_bairro          String
+  hosp_cidade          String
   hosp_unidade_federal String
   hosp_pic             String
   certification        Certification[]

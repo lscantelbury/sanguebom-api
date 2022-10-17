@@ -17,6 +17,7 @@ export class HospitalController {
       hosp_password,
       hosp_rua,
       hosp_num_predial,
+      hosp_bairro,
       hosp_cep,
       hosp_cidade,
       hosp_unidade_federal,
@@ -29,6 +30,7 @@ export class HospitalController {
           hosp_username,
           hosp_password,
           hosp_rua,
+          hosp_bairro,
           hosp_num_predial,
           hosp_cep,
           hosp_cidade,
@@ -89,3 +91,17 @@ export class HospitalController {
     }
   }
 }
+
+// create a hospital in json format
+// {
+//   "hosp_name": "Hospital de Teste",
+//   "hosp_username": "hospitalteste",
+//   "hosp_password": "123456",
+//   "hosp_rua": "Rua de Teste",
+//   "hosp_num_predial": "123",
+//   "hosp_bairro": "Bairro de Teste",
+//   "hosp_cep": "12345678",
+//   "hosp_cidade": "Cidade de Teste",
+//   "hosp_unidade_federal": "UF de Teste",
+//   "hosp_pic": "https://www.google.com.br"
+// }

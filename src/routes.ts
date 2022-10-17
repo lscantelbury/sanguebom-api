@@ -19,7 +19,7 @@ const certificationController = new CertificationController();
 routes.get("/users", userController.index);
 routes.post("/create-user", userController.create);
 routes.put("/update-user/:user_id_pk", userController.update);
-routes.put("/users/:user_id_pk", userController.show);
+routes.get("/users/:user_id_pk", userController.show);
 routes.post("/user/login", userController.login);
 routes.put("/add-points/:user_id_pk", userController.addPoints);
 routes.put("/reset-password/:user_id_pk", userController.resetPassword);
