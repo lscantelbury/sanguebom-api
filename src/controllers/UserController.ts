@@ -55,14 +55,13 @@ export class UserController {
   async show(request: Request, response: Response) {
     const { user_id_pk } = request.params;
     try {
-      if (typeof user_id_pk === "number") {
+
         const user = await prismaClient.user.findUnique({
           where: {
-            user_id_pk: user_id_pk,
+            user_id_pk: Number(user_id_pk),
           },
         });
         return response.status(200).json(user);
-      }
     } catch (error: any) {
       return response.status(500).json({ error: error.message });
     }
